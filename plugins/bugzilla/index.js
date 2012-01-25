@@ -1,7 +1,7 @@
 var commands = require('./cmd');
 
 function parseLine(from, to, msg) {
-  if (msg[0] === '!') {
+  if (msg[0] === '!' && msg.length > 1) {
     var sp = msg.split(' ', 2)
       , info = {
           from: from
