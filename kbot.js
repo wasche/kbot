@@ -9,10 +9,10 @@ process.on('uncaughtException', function(err) {
   console.log('Uncaught Exception: ' + err);
 });
 
-kbot = new bot('irc.tripadvisor.com', 'nbot', {
+kbot = new bot('irc.tripadvisor.com', 'kbot', {
   port: 6667
-, userName: 'nbot'
-, realName: 'nbot'
+, userName: 'kbot'
+, realName: 'kbot'
 , debug: true
 , secure: false
 , channels: ['#testing']
