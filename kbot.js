@@ -15,7 +15,7 @@ kbot = new bot('irc.tripadvisor.com', 'kbot', {
 , realName: 'kbot'
 , debug: true
 , secure: false
-, channels: ['#testing']
+, channels: ['#social']
 });
 
 //kbot.loadPlugin('admin', {nick: ['wasche']});
