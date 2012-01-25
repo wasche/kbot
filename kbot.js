@@ -2,7 +2,6 @@
 
 var bot = require('ircbot')
   , repl = require('repl')
-  , daemon = require('daemon')
   , kbot
   , r
   ;
@@ -22,8 +21,3 @@ kbot = new bot('irc.tripadvisor.com', 'kbot', {
 
 //kbot.loadPlugin('admin', {nick: ['wasche']});
 kbot.loadPlugin('bugzilla');
-
-daemon.daemonize('daemon.log', '/tmp/kbot.pid', function(err, pid) {
-  if (err) { return console.log('Error starting daemon: ' + err); }
-  console.log('Daemon started with pid: ' + pid);
-});
