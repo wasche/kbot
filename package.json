@@ -1,0 +1,8 @@
+{
+  "name": "kbot"
+, "version": "0.0.0"
+, "dependencies": {
+    "ircbot": "~0.0.2"
+  , "xml2js-expat": "~0.2.0"
+  }
+}

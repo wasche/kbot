@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var bot = require('ircbot')
-  , repl = require('repl')
   , kbot
   , r
   ;
@@ -10,14 +9,15 @@ process.on('uncaughtException', function(err) {
   console.log('Uncaught Exception: ' + err);
 });
 
-kbot = new bot('irc.tripadvisor.com', 'kbot', {
+kbot = new bot('irc.tripadvisor.com', 'nbot', {
   port: 6667
-, userName: 'kbot'
-, realName: 'kbot'
+, userName: 'nbot'
+, realName: 'nbot'
 , debug: true
 , secure: false
-, channels: ['#social']
+, channels: ['#testing']
 });
 
 //kbot.loadPlugin('admin', {nick: ['wasche']});
 kbot.loadPlugin('bugzilla');
+kbot.loadPlugin('reviewboard');
