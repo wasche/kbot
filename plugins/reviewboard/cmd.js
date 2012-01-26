@@ -25,11 +25,13 @@ var cmds = {
         var obj = JSON.parse(buf);
         if (obj.stat && 'ok' === obj.stat) {
           var rr = obj.review_request;
-          info.bot.respond(info, format('%s | %s | %s | %s',
+          info.bot.respond(info, format('%s | %s | %s | %s | http://%s/r/%s/',
                                         rr.summary,
                                         rr.links.submitter && rr.links.submitter.title,
                                         rr.status,
-                                        rr.branch));
+                                        rr.branch || 'no branch',
+                                        info.plugin.options.host
+                                        id));
         } else {
           info.bot.respond(info, 'Sorry, I can\'t find what you\'re looking for.');
         }
