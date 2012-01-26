@@ -63,7 +63,7 @@ start() {
 stop() {
   echo -n "Shutting down $NAME node instance : "
   if [ "$foreverid" != "" ]; then
-    $node $SOURCE_DIR/prepareForStop.js
+    #$node $SOURCE_DIR/prepareForStop.js
     $forever stop -p $forever_dir $id
   else
     echo "Instance is not running";
