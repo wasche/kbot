@@ -11,7 +11,6 @@ var bot = require('ircbot')
     , plugins: {}
     }, require('./config'))
   , kbot
-  , r
   ;
 
 process.on('uncaughtException', function(err) {
@@ -22,9 +21,9 @@ kbot = new bot(options.host, options.name, {
   port: options.port
 , userName: options.name
 , realName: options.name
-, debug: false
+, debug: true
 , secure: options.secure
-, channels: options.channel
+, channels: options.channels
 });
 
 for (plugin in options.plugins) {

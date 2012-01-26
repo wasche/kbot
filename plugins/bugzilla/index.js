@@ -10,6 +10,7 @@ function parseLine(from, to, msg) {
         , cmdstr: sp[0].substr(1)
         , rest: sp[1]
         , bot: plugin.bot
+        , plugin: plugin
         }
       ;
 

@@ -15,7 +15,7 @@ var cmds = {
   rb: function(info) {
     var id = info.rest;
     http.get({
-      host: 'rb.tripadvisor.com'
+      host: info.plugin.options.host
     , path: '/api/review-requests/' + id + '/'
     }, function(res) {
       var buf = [];
@@ -30,6 +30,8 @@ var cmds = {
                                         rr.links.submitter && rr.links.submitter.title,
                                         rr.status,
                                         rr.branch));
+        } else {
+          info.bot.respond(info, 'Sorry, I can\'t find what you\'re looking for.');
         }
       });
     }).on('error', function(e) {

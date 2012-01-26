@@ -16,7 +16,7 @@ var cmds = {
   bug: function(info) {
     var bug = info.rest;
     https.get({
-      host: 'bugs.tripadvisor.com'
+      host: info.plugin.options.host
     , path: '/show_bug.cgi?ctype=xml&id=' + bug
     }, function(res) {
       var buf = [];

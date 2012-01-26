@@ -1,8 +1,9 @@
 {
   "name": "kbot"
-, "version": "0.0.0"
+, "version": "0.0.1"
 , "dependencies": {
     "ircbot": "~0.0.2"
   , "xml2js-expat": "~0.2.0"
+  , "object-merge": "~0.0.1"
   }
 }
