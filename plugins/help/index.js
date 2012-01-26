@@ -23,5 +23,5 @@ var plugin = module.exports = {
     message: parseLine
   }
 , reload: ['./cmd'].map(require.resolve)
-, commands: ['!rb']
+, commands: ['!help']
 };
