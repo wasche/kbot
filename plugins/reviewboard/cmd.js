@@ -30,7 +30,7 @@ var cmds = {
                                         rr.links.submitter && rr.links.submitter.title,
                                         rr.status,
                                         rr.branch || 'no branch',
-                                        info.plugin.options.host
+                                        info.plugin.options.host,
                                         id));
         } else {
           info.bot.respond(info, 'Sorry, I can\'t find what you\'re looking for.');
