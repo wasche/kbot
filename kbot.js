@@ -9,6 +9,8 @@ var bot = require('ircbot')
     , name: 'kbot'
     , channels: []
     , plugins: {}
+    , userGid: 'node'
+    , userUid: 'node'
     }, require('./config'))
   , kbot
   ;
@@ -16,6 +18,9 @@ var bot = require('ircbot')
 process.on('uncaughtException', function(err) {
   console.log('Uncaught Exception: ' + err);
 });
+
+process.setgid(options.userGid);
+process.setuid(options.userUid);
 
 kbot = new bot(options.host, options.name, {
   port: options.port
