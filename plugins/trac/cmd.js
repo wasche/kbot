@@ -12,11 +12,11 @@ exports.run = function(info) {
 };
 
 var cmds = {
-  rb: function(info) {
+  trac: function(info) {
     var id = info.rest;
 
     nodeio.scrape(function() {
-      this.get('http://' + info.plugin.options.host + '/ticket/' + rest + '?format=csv', function(err, data) {
+      this.get('http://' + info.plugin.options.host + '/ticket/' + id + '?format=csv', function(err, data) {
         if (err) {
           info.bot.respond(info, "Sorry, I can't find what you're looking for.");
           return;
@@ -35,6 +35,7 @@ var cmds = {
                                        info.plugin.options.host,
                                        id));
         }
+        skip();
       });
     });
   }
