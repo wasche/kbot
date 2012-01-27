@@ -1,4 +1,6 @@
-s some perhaps unnecessary complexity going on in the relationship between
+#!/bin/sh
+#
+#s some perhaps unnecessary complexity going on in the relationship between
 #  Forever and the server process. See: https://github.com/indexzero/forever
 #
 # 1) Forever starts its own watchdog process, and keeps its own configuration data 
@@ -52,7 +54,7 @@ start() {
     # Launch the application
     daemon --user=root \
       $forever start -p $forever_dir --pidfile $pidfile -l $logfile \
-      -a -d $SOURCE_DIR $SOURCE_FILE
+      -a --sourceDir $SOURCE_DIR $SOURCE_FILE
     RETVAL=$?
   else
     echo "Instance already running"
