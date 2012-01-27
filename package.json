@@ -5,6 +5,6 @@
     "ircbot": "~0.0.2"
   , "xml2js-expat": "~0.2.0"
   , "object-merge": "~0.0.1"
-  , "node.io"     : "~0.4.8"
+  , "csv"         : "~0.0.10"
   }
 }
