@@ -23,5 +23,10 @@ var plugin = module.exports = {
     message: parseLine
   }
 , reload: ['./cmd'].map(require.resolve)
-, commands: ['!help']
+, commands: {
+    '!help': [
+        '!help - Show list of available commands'
+      , '!help cmd - Show help text for cmd'
+      ]
+  }
 };

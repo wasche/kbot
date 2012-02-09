@@ -23,5 +23,7 @@ var plugin = module.exports = {
     message: parseLine
   }
 , reload: ['./cmd'].map(require.resolve)
-, commands: ['!trac']
+, commands: {
+      '!trac': '!trac NNN - show information about trac ticket # NNN'
+  }
 };
