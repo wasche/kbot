@@ -17,4 +17,11 @@ exports.plugins = {
   admin: {
     nick: ['admin']
   }
+, json: {
+    host: 'http://example.com'
+  , cmd: {
+      path: '/obj/$1'
+    , text: '${id} name is ${name}'
+    }
+  }
 };
