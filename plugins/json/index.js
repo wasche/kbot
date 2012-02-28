@@ -5,9 +5,8 @@ var http = require('http')
 
 function parseLine(from, to, msg) {
   if (msg[0] === '!' && msg.length > 1) {
-    var sp = msg.split(' ')
-      , cmdstr = sp[0].substr(1)
-      , args = sp.slice(1)
+    var args = msg.split(' ')
+      , cmdstr = args[0].substr(1)
       , bot = plugin.bot
       , ops = plugin.options[cmdstr]
       , info = {
@@ -21,12 +20,14 @@ function parseLine(from, to, msg) {
     if (ops) {
       // replace $N with args[N]
       uri = ops.path;
-      while (uri.test(/\$(\d+)/)) {
+      while (/\$(\d+)/.test(uri)) {
         n = parseInt(RegExp.$1);
         uri = RegExp.leftContext + (args[n] || '') + RegExp.rightContext;
       }
+      console.log(plugin.options.host + ':' + plugin.options.port + uri);
       http.get({
         host: plugin.options.host
+      , port: plugin.options.port || 80
       , path: uri
       }, function(res) {
         var buf = [];
@@ -36,12 +37,13 @@ function parseLine(from, to, msg) {
             , str = ops.text
             ;
           // replace ${key} with obj[key]
-          while (str.text/\$\{([_\w\d]+)\}/) {
+          while (/\$\{([_\w\d]+)\}/.test(str)) {
             str = RegExp.leftContext + (obj[RegExp.$1] || '') + RegExp.rightContext;
           }
           bot.respond(info, str);
         });
       }).on('error', function(e) {
+        console.log(e);
         bot.respond(info, 'Sorry, unable to process request at this time.');
       });
     }
