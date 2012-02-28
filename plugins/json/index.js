@@ -54,7 +54,16 @@ var plugin = module.exports = {
   listeners: {
     message: parseLine
   }
-, commands: {
-//      '!rb': '!rb NNN - show information about ReviewBoard review # NNN'
-  }
 };
+
+Object.defineProperty(plugin, 'commands', {
+  enumberable: true
+, get: function() {
+    var ret = {};
+    for (prop in plugin.options) {
+      if ('host' === prop || 'port' === prop) { continue; }
+      ret['!' + prop] = '!' + prop + ' ' + plugin.options[prop].description;
+    }
+    return ret;
+  }
+});
