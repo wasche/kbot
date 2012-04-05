@@ -1,36 +1,35 @@
 #!/usr/bin/env node
 
-var bot = require('ircbot')
-  , merge = require('object-merge').merge
-  , options = merge({
-      host: 'irc.example.com'
-    , port: 6667
-    , secure: false
-    , name: 'kbot'
-    , channels: []
-    , plugins: {}
-    , userGid: 'node'
-    , userUid: 'node'
-    }, require('./config'))
-  , kbot
+var irc = require('irc')
+  , fs = require('fs')
+  , path = require('path')
+  , config = require('./config')
+  , client
   ;
+
+process.setgid(config.userGid || 'node');
+process.setuid(config.userUid || 'node');
+
+config.host     = config.host || 'irc.example.com';
+config.port     = config.port || 6667;
+config.nick     = config.nick || 'kbot';
+config.channels = config.channels || [];
+
+client = new irc.Client(config.host, config.nick, { channels: config.channels });
 
 process.on('uncaughtException', function(err) {
   console.log('Uncaught Exception: ' + err);
 });
 
-process.setgid(options.userGid);
-process.setuid(options.userUid);
+fs.readdir(path.join(__dirname, 'plugins'), function(err, files){
+  if (err) {
+    console.log(err);
+    return;
+  }
 
-kbot = new bot(options.host, options.name, {
-  port: options.port
-, userName: options.name
-, realName: options.name
-, debug: true
-, secure: options.secure
-, channels: options.channels
+  files.forEach(function(file){
+    /\.js$/.test(file) || return;
+    var plugin = require(path.join(__dirname, 'plugins', file));
+    plugin.load(client, config);
+  });
 });
-
-for (plugin in options.plugins) {
-  kbot.loadPlugin(plugin, options.plugins[plugin]);
-}

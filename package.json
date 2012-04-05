@@ -1,10 +1,10 @@
 {
   "name": "kbot"
-, "version": "0.0.1"
+, "version": "0.0.2"
+, "private": true
 , "dependencies": {
-    "ircbot": "~0.0.2"
+    "irc": "~0.3.3"
   , "xml2js-expat": "~0.2.0"
-  , "object-merge": "~0.0.1"
   , "csv"         : "~0.0.10"
   }
 }

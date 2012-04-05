@@ -7,21 +7,25 @@ exports.host = 'irc.example.com';
 
 exports.port = 6667;
 
-exports.secure = false;
+exports.nick = 'kbot';
 
-exports.name = 'kbot';
+exports.channels = ['#test'];
 
-exports.channels = [];
+// plugins
 
 exports.plugins = {
-  admin: {
-    nick: ['admin']
+  bugzilla: {
+    host: 'bugs.example.com'
   }
-, json: {
-    host: 'http://example.com'
-  , cmd: {
-      path: '/obj/$1'
-    , text: '${id} name is ${name}'
-    }
+, reviewboard: {
+    host: 'reviewboard.example.com'
+  }
+, trac: {
+    host: 'trac.example.com'
+  }
+, holiday: {
+    host: 'example.com'
+  , port: 80
+  , path: '/holidays.ics'
   }
 };
