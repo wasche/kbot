@@ -7,6 +7,9 @@ var http = require('http')
   ;
 
 plugin.trac = function trac(id, channel) {
+  var config = this.config
+    , client = this.bot.client
+    ;
   http.get({
     host: this.config.host
   , path: '/ticket/' + id + '?format=csv'
@@ -26,20 +29,20 @@ plugin.trac = function trac(id, channel) {
           // component,
           // severity, resolution, keywords, cc, loe, verify_trunk, verify_path, verify_pre,
           // verify_live, code_review
-          this.client.say(channel, format('%s | %s %s (%s) | http://%s/ticket/%s',
+          client.say(channel, format('%s | %s %s (%s) | http://%s/ticket/%s',
                                        ticket.summary,
                                        ticket.status,
                                        ticket.resolution,
                                        ticket.milestone,
-                                       this.config.host,
+                                       config.host,
                                        id));
       })
       .on('error', function(error){
-        this.client.say(channel, "Sorry, I can't find what you're looking for.");
+        client.say(channel, "Sorry, I can't find what you're looking for.");
       });
     });
   }).on('error', function(e) {
-    this.client.say(channel, 'Sorry, unable to process request at this time.');
+    client.say(channel, 'Sorry, unable to process request at this time.');
   });
 }
 
@@ -49,10 +52,14 @@ plugin.parseChannelMessage = function parseChannelMessage(from, to, message) {
   }
 }
 
-plugin.load = {
-  load: function load(client, config){
-    this.config = config;
-    this.client = client;
-    client.addListener('message', this.parseChannelMessage);
-  }
+plugin.commands = function commands() {
+  return {
+    '!trac': 'show summary of trac ticket'
+  };
+}
+
+plugin.load = function load(bot, config){
+  this.config = config;
+  this.bot = bot;
+  this.bot.client.addListener('message', this.parseChannelMessage.bind(this));
 }

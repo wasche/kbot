@@ -6,6 +6,7 @@ var http = require('http')
   ;
 
 plugin.rb = function rb(channel) {
+  var client = this.bot.client;
   http.get({
     host: this.config.host
   , port: this.config.port
@@ -33,14 +34,14 @@ plugin.rb = function rb(channel) {
       holiday = obj.events.shift();
       holiday.start = new Date(holiday.start);
       days = ((holiday.start.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)).toFixed();
-      this.client.say(channel, format('There are %s days until %s on %s',
+      client.say(channel, format('There are %s days until %s on %s',
                                     days,
                                     holiday.summary,
                                     holiday.start.toDateString())
                       );
     });
   }).on('error', function(e) {
-    this.client.say(channel, 'Sorry, unable to process request at this time.');
+    client.say(channel, 'Sorry, unable to process request at this time.');
   });
 }
 
@@ -50,10 +51,14 @@ plugin.parseChannelMessage = function parseChannelMessage(from, to, message) {
   }
 }
 
-plugin.load = {
-  load: function load(client, config){
-    this.config = config;
-    this.client = client;
-    client.addListener('message', this.parseChannelMessage);
-  }
+plugin.commands = function commands() {
+  return {
+    '!holiday': 'show days until next holiday'
+  };
+}
+
+plugin.load = function load(bot, config){
+  this.config = config;
+  this.bot = bot;
+  this.bot.client.addListener('message', this.parseChannelMessage.bind(this));
 }

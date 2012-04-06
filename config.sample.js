@@ -26,6 +26,6 @@ exports.plugins = {
 , holiday: {
     host: 'example.com'
   , port: 80
-  , path: '/holidays.ics'
+  , path: '/holidays.json'
   }
 };

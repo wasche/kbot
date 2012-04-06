@@ -4,6 +4,7 @@ var irc = require('irc')
   , fs = require('fs')
   , path = require('path')
   , config = require('./config')
+  , kbot = {}
   , client
   ;
 
@@ -27,9 +28,13 @@ fs.readdir(path.join(__dirname, 'plugins'), function(err, files){
     return;
   }
 
+  kbot.client = client;
+  kbot.plugins = [];
+
   files.forEach(function(file){
-    /\.js$/.test(file) || return;
+    if (!/\.js$/.test(file)) { return; }
     var plugin = require(path.join(__dirname, 'plugins', file));
-    plugin.load(client, config);
+    kbot.plugins.push(plugin);
+    plugin.load(kbot, config.plugins[path.basename(file, '.js')]);
   });
 });

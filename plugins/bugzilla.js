@@ -7,6 +7,7 @@ var xml2js = require('xml2js-expat')
   ;
 
 plugin.bug = function bug(id, channel) {
+  var client = this.bot.client;
   https.get({
     host: this.config.host
   , path: '/show_bug.cgi?ctype=xml&id=' + id
@@ -18,10 +19,10 @@ plugin.bug = function bug(id, channel) {
         if (error) { console.log(error); return; }
         var bug = result.bug;
         if (bug['@'] && bug['@'].error) {
-          this.client.say(channel, format("I'm sorry, bug %s seems to have scampered off.", bug.bug_id));
+          client.say(channel, format("I'm sorry, bug %s seems to have scampered off.", bug.bug_id));
         }
         else {
-          this.client.say(channel, format('%s | %s -> %s | %s (%s) | %s%s%s',
+          client.say(channel, format('%s | %s -> %s | %s (%s) | %s%s%s',
                                         bug.short_desc,
                                         bug.reporter['#'],
                                         bug.assigned_to['#'],
@@ -37,7 +38,7 @@ plugin.bug = function bug(id, channel) {
       parser.parseString(buf);
     });
   }).on('error', function(e) {
-    this.client.say(channel, 'Sorry, unable to process request at this time.');
+    client.say(channel, 'Sorry, unable to process request at this time.');
   });
 }
 
@@ -47,10 +48,14 @@ plugin.parseChannelMessage = function parseChannelMessage(from, to, message) {
   }
 }
 
-plugin.load = {
-  load: function load(client, config){
-    this.config = config;
-    this.client = client;
-    client.addListener('message', this.parseChannelMessage);
-  }
+plugin.commands = function commands() {
+  return {
+    '!bug': 'show summary of bug'
+  };
+}
+
+plugin.load = function load(bot, config){
+  this.config = config;
+  this.bot = bot;
+  this.bot.client.addListener('message', this.parseChannelMessage.bind(this));
 }

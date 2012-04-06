@@ -6,6 +6,9 @@ var http = require('http')
   ;
 
 plugin.rb = function rb(id, channel) {
+  var config = this.config
+    , client = this.bot.client
+    ;
   http.get({
     host: this.config.host
   , path: '/api/review-requests/' + id + '/'
@@ -18,19 +21,19 @@ plugin.rb = function rb(id, channel) {
       obj = JSON.parse(buf);
       if (obj.stat && 'ok' === obj.stat) {
         rr = obj.review_request;
-        this.client.say(channel, format('%s | %s | %s | %s | http://%s/r/%s/',
+        client.say(channel, format('%s | %s | %s | %s | http://%s/r/%s/',
                                       rr.summary,
                                       rr.links.submitter && rr.links.submitter.title,
                                       rr.status,
                                       rr.branch || 'no branch',
-                                      this.config.host,
+                                      config.host,
                                       id));
       } else {
-        this.client.say(channel, 'Sorry, I can\'t find what you\'re looking for.');
+        client.say(channel, 'Sorry, I can\'t find what you\'re looking for.');
       }
     });
   }).on('error', function(e) {
-    this.client.say(channel, 'Sorry, unable to process request at this time.');
+    client.say(channel, 'Sorry, unable to process request at this time.');
   });
 }
 
@@ -40,10 +43,14 @@ plugin.parseChannelMessage = function parseChannelMessage(from, to, message) {
   }
 }
 
-plugin.load = {
-  load: function load(client, config){
-    this.config = config;
-    this.client = client;
-    client.addListener('message', this.parseChannelMessage);
-  }
+plugin.commands = function commands() {
+  return {
+    '!rb': 'show summary of review board request'
+  };
+}
+
+plugin.load = function load(bot, config){
+  this.config = config;
+  this.bot = bot;
+  this.bot.client.addListener('message', this.parseChannelMessage.bind(this));
 }
