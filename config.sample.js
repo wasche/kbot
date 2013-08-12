@@ -28,4 +28,9 @@ exports.plugins = {
   , port: 80
   , path: '/holidays.json'
   }
+, git: {
+    host: 'gitlab.example.com'
+  , port: 80
+  , token: '1234567890abcdEFG'
+  }
 };
