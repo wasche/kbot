@@ -34,7 +34,7 @@ plugin.bug = function bug(id, channel) {
                                        ));
         }
       });
-      buf = buf.join();
+      buf = buf.join("");
       parser.parseString(buf);
     });
   }).on('error', function(e) {
