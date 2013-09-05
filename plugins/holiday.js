@@ -15,7 +15,7 @@ plugin.rb = function rb(channel) {
     var buf = [];
     res.on('data', function(d) { buf.push(d); });
     res.on('end', function() {
-      var obj = JSON.parse(buf.join())
+      var obj = JSON.parse(buf.join(""))
         , today = new Date()
         , holiday
         , days

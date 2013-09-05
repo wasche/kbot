@@ -17,7 +17,7 @@ plugin.rb = function rb(id, channel) {
     res.on('data', function(d) { buf.push(d); });
     res.on('end', function() {
       var obj, rr;
-      buf = buf.join();
+      buf = buf.join("");
       obj = JSON.parse(buf);
       if (obj.stat && 'ok' === obj.stat) {
         rr = obj.review_request;

@@ -19,7 +19,7 @@ plugin.trac = function trac(id, channel) {
     res.on('end', function() {
       var lines = [];
       csv()
-        .from(buf.join(), {columns: true})
+        .from(buf.join(""), {columns: true})
         .on('data', function(data, index){
           lines.push(data);
         })

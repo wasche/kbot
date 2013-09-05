@@ -16,7 +16,7 @@ plugin.git = function git(project_name, merge_request_id, channel) {
                  res.on('data', function(d) { buf.push(d); });
                  res.on('end', function() {
                      var obj, rr;
-                     buf = buf.join();
+                     buf = buf.join("");
                      obj = JSON.parse(buf);
                      if (obj.length != 0) {
                          var length = obj.length;
@@ -44,7 +44,7 @@ plugin.displayDetails = function displayDetails(project_id, merge_request_id, we
                  res.on('data', function(d) { buf.push(d); });
                  res.on('end', function() {
                      var obj, rr;
-                     buf = buf.join();
+                     buf = buf.join("");
                      obj = JSON.parse(buf);
                      client.say(channel, format('%s | %s -> %s | %s -> %s | %s/merge_requests/%d',
                                                 obj.title,
@@ -68,7 +68,7 @@ plugin.parseChannelMessage = function parseChannelMessage(from, to, message) {
 
 plugin.commands = function commands() {
     return {
-        '!git': 'show summary of gitlab merge requests'
+        '!git <project-name> <merge id>': 'show summary of gitlab merge requests'
     };
 }
 

@@ -16,7 +16,7 @@ plugin.dingo = function dingo(id, channel) {
     res.on('data', function(d) { buf.push(d); });
     res.on('end', function() {
       var obj;
-      buf = buf.join();
+      buf = buf.join("");
       obj = JSON.parse(buf);
       client.say(channel, format('%s | http://go/d%d', obj.name, id));
     });
