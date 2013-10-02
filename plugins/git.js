@@ -51,7 +51,7 @@ plugin.displayDetails = function displayDetails(project_id, merge_request_id, we
                                                 obj.source_branch,
                                                 obj.target_branch,
                                                 obj.author.name,
-                                                obj.assignee.name,
+                                                obj.assignee == null ? "null" : obj.assignee.name,
                                                 web_url,
                                                 merge_request_id));
                  }).on('error', function(e) {
